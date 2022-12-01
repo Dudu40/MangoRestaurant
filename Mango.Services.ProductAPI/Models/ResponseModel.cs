@@ -1,4 +1,4 @@
-﻿namespace Mango.Services.ProductAPI.Model
+﻿namespace Mango.Services.API.Models
 {
     public class ResponseModel
     {

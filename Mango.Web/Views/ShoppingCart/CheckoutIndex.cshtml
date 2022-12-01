@@ -1,0 +1,31 @@
+﻿<div class="container-fluid">
+    <form method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" rows="3"></input>
+        </div>
+        <div class="input-group date" data-provide="datepicker">
+            <input type="text" class="form-control">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="code" class="form-label">Number</label>
+            <input type="number" class="form-control" id="code" max="16" min="16">
+        </div>
+        <div class="mb-3">
+            <label for="code2" class="form-label">Code</label>
+            <input type="number" class="form-control" id="code2" max="3">
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        // Data Picker Initialization
+        $('.datepicker').datepicker({
+            format: 'mmm yyyy',
+        });
+    </script>
+}

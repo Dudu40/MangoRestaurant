@@ -1,10 +1,20 @@
-﻿namespace Mango.Web
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+
+namespace Mango.Web
 {
     public static class Utils
     {
-        public static string ProductAPIBase { get; set; }
+        public static string APIBase { get; set; }
 
-        public enum ApiType
+        public const string CookieName = CookieAuthenticationDefaults.AuthenticationScheme;
+
+        public static class UserRoles
+        {
+            public const string Admin = "Admin";
+            public const string Customer = "Customer";
+        }
+
+    public enum ApiType
         {
             GET,
             POST,

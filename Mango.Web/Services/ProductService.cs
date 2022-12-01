@@ -11,51 +11,61 @@ namespace Mango.Web.Services
         {
         }
 
-        public async Task<T> AddProductAsynch<T>(ProductModel product)
+        public async Task<T> AddProductAsync<T>(ProductModel product)
         {
             return await SendRequest<T>(new RequestModel()
             {
                 ApiType = Utils.ApiType.POST,
-                Url = Utils.ProductAPIBase + "api/products" ,
+                Url = Utils.APIBase + "api/products/add" ,
                 Data = product,
             });
         }
 
-        public async Task<T> DeleteProductAsynch<T>(int id)
+        public async Task<T> DeleteProductAsync<T>(int id)
         {
             return await SendRequest<T>(new RequestModel()
             {
                 ApiType = Utils.ApiType.DELETE,
-                Url = Utils.ProductAPIBase + "api/products/" + id
+                Url = Utils.APIBase + "api/products/delete/" + id
             });
         }
 
-        public async Task<T> GetProductByIdAsynch<T>(int id)
+        public async Task<T> GetProductByIdAsync<T>(int id)
         {
             return await SendRequest<T>(new RequestModel()
             {
                 ApiType = Utils.ApiType.GET,
-                Url = Utils.ProductAPIBase + "api/products/"+ id
+                Url = Utils.APIBase + "api/products/getById/"+ id
             });
         }
 
-        public async Task<T> GetProductsAsynch<T>()
+        public async Task<T> GetProductsAsync<T>()
         {
             return await SendRequest<T>(new RequestModel()
             {
                 ApiType = Utils.ApiType.GET,
-                Url = Utils.ProductAPIBase + "api/products"
+                Url = Utils.APIBase + "api/products/getAll"
             });
         }
 
-        public async Task<T> UpdateProductAsynch<T>(ProductModel product)
+        public async Task<T> UpdateProductAsync<T>(ProductModel product)
         {
             return await SendRequest<T>(new RequestModel()
             {
                 ApiType = Utils.ApiType.PUT,
-                Url = Utils.ProductAPIBase + "api/products",
+                Url = Utils.APIBase + "api/products/update",
                 Data = product
             });
+        }
+
+        public async Task<T> AddToShoppingCartAsync<T>(CartDetailModel productDetail)
+        {
+            return await SendRequest<T>(new RequestModel()
+            {
+                ApiType = Utils.ApiType.POST,
+                Url = Utils.APIBase + "api/products/addToShoppingCart",
+                Data = productDetail
+            }); ;
         }
     }
 }

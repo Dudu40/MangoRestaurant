@@ -1,8 +1,80 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<Mango.Web.Model.ProductModel>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container-fluid">
+    <div class="row mb-3 justify-content-end">
+        <div class="col-4">
+            <input class="form-control" placeholder="Search" type="search">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-success">Validate</button>
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <article class="text-center">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Category</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="text-center px-0" style="list-style:none">
+                            <li>Entrée</li>
+                            <li>Plat</li>
+                            <li>Dessert</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Price</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="range" class="custom-range" min="0" max="100" name="">
+                        <div class="row">
+                            <div class="form-group text-right col">
+                                <label>Min</label>
+                                <input class="form-control" placeholder="$0" type="number">
+                            </div>
+                            <div class="form-group text-right col">
+                                <label>Max</label>
+                                <input class="form-control" placeholder="$1,0000" type="number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-10">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                @foreach (var product in Model)
+                {
+                <div class="col">
+                    <div class="card h-100">
+                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId" class="h-100">
+                            <img src=@product.ImageUrl class="card-img-top h-100">
+                        </a>
+                        <div class="card-body ">
+                            <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId" class="text-decoration-none">
+                                <h3 class="card-title text-dark">@product.Name</h3>
+                            </a>
+                            <div class="d-flex justify-content-around">
+                                <span style="font-size:26px">@product.Price €</span>
+                                <a asp-controller="Product" asp-action="AddToShoppingCard" asp-route-productId="@product.ProductId"  class="align-self-end text-black">
+                                    <i class="fa fa-shopping-cart fa-2x"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                }
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+

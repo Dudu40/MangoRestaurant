@@ -1,0 +1,49 @@
+﻿@model CartDetailModel
+
+<div class="container">
+    <div class="card w-75 m-auto">
+        <div class="card-header bg-transparent border-0">
+            <div class="row">
+                <div class="col">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-success w-25 ms-2 mt-2">Back</a>
+                </div>
+                <div class="col">
+                    <h3 class="card-title  ms-lg-5">@Model.Product.Name</h3>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="EditItem">
+            <div class="row">
+                <div class="col" style="max-height:30vh">
+                    <img src=@Model.Product.ImageUrl class="card-img-top h-100"/>
+                </div>
+                <div class="col">
+                    <p class="fw-bold">@Model.Product.CategoryName</p>
+                    <p class="card-text">@Model.Product.Description</p> 
+                     <input asp-for="Product.ProductId" name="ProductId" hidden/> 
+                     <input type="number" min="1" asp-for="Quantity" name="Quantity" id="quantity" value="@Model.Quantity" />
+                 </div>
+            </div>
+            <div class="row justify-content-end">
+                <button type="submit" class="btn btn-success mt-3 w-50">Add to Order : <span id="result"></span></button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#result').html(@Model.Quantity* @Model.Product.Price);
+        });
+        $('#quantity').change(function () {
+            $('#result').html($(this).val()*@Model.Product.Price);
+        });
+       
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

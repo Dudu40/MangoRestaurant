@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mango.Web.Models
+namespace Mango.Web.Models.ViewModel
 {
     public class ErrorViewModel
     {

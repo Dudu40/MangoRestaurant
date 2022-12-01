@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Mango.Services.ProductAPI.Migrations
+namespace Mango.Services.API.Migrations
 {
     /// <inheritdoc />
     public partial class AddProductModelToDb : Migration

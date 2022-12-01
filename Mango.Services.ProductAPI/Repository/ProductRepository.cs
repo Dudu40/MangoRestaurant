@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
-using Mango.Services.ProductAPI.Entities;
-using Mango.Services.ProductAPI.Model;
+using Mango.Services.API.Entities;
+using Mango.Services.API.Models;
+using Mango.Web.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mango.Services.ProductAPI.Repository
+namespace Mango.Services.API.Repository
 {
     public class ProductRepository : IProductRepository
     {
@@ -69,6 +71,50 @@ namespace Mango.Services.ProductAPI.Repository
         {
             List<Product> productList = await _db.Products.ToListAsync();
             return _mapper.Map<List<ProductModel>>(productList);
+        }
+
+        public async Task<CartDetailModel> AddToShoppingCart(CartDetailModel cartDetailModel)
+        {
+            // map productDetailsViewModel to product
+            Product product = _mapper.Map<Product>(cartDetailModel.Product);
+
+            // get header of shoppingcart user with userId
+            CartHeader cartHeader = await _db.CartHeaders.Where(c => c.UserId == cartDetailModel.UserId).FirstOrDefaultAsync();
+            // if headerId ==null -> create a new header with this userId
+            if (cartHeader == null)
+            {
+                cartHeader = new CartHeader()
+                {
+                    UserId = cartDetailModel.UserId,
+                    CouponCode = null,
+                };
+                // add header to the db
+                _db.CartHeaders.Add(cartHeader);
+                await _db.SaveChangesAsync();
+            }
+            //if the cartDetail doesn't exist -> Create new cartDetail (ProductId,quantity,HeaderId) for this headerId
+            CartDetail cartDetail = await _db.CartDetails.Where(c =>c.ProductId==product.ProductId).FirstOrDefaultAsync();
+            if(cartDetail == null)
+            {
+                cartDetail = new CartDetail()
+                {
+                    HeaderId = cartHeader.Id,
+                    ProductId = product.ProductId,
+                    Quantity = cartDetailModel.Quantity
+
+                };
+                _db.CartDetails.Add(cartDetail);
+                await _db.SaveChangesAsync();
+            }
+            else
+            // else change only the quantity
+            {          
+                cartDetail.Quantity += cartDetailModel.Quantity;       
+                _db.CartDetails.Update(cartDetail);
+                await _db.SaveChangesAsync();
+            }
+           
+            return _mapper.Map<CartDetailModel>(cartDetail);
         }
     }
 }
